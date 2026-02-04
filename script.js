@@ -13,15 +13,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const observer = new IntersectionObserver(
     entries => {
-      entries.forEach(entry => {
+      entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
+          // Add a small delay based on index for staggered effect in grids
+          setTimeout(() => {
+            entry.target.classList.add('in-view');
+          }, index * 50); // 50ms stagger
           observer.unobserve(entry.target);
         }
       });
     },
     {
-      threshold: 0.12,
+      threshold: 0.1, // Trigger slightly earlier
+      rootMargin: '0px 0px -50px 0px' // Offset to trigger a bit before fully in view
     }
   );
 
